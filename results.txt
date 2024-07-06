@@ -1,0 +1,270 @@
+
+C:\Users\Oshadhi Liyanage\Learnings\MSC\FYP\Existing work\AIGT\src>python build_embeddings.py
+[nltk_data] Downloading package stopwords to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package punkt to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package wordnet to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\huggingface_hub\file_download.py:1132: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Some weights of the model checkpoint at albert-base-v2 were not used when initializing AlbertModel: ['predictions.LayerNorm.bias', 'predictions.dense.weight', 'predictions.dense.bias', 'predictions.bias', 'predictions.decoder.weight', 'predictions.LayerNorm.weight', 'predictions.decoder.bias']
+- This IS expected if you are initializing AlbertModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing AlbertModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [4:33:31<00:00, 27.35s/it]
+Some weights of the model checkpoint at google/electra-small-discriminator were not used when initializing ElectraModel: ['discriminator_predictions.dense_prediction.weight', 'discriminator_predictions.dense.weight', 'discriminator_predictions.dense.bias', 'discriminator_predictions.dense_prediction.bias']
+- This IS expected if you are initializing ElectraModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing ElectraModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [40:10<00:00,  4.02s/it] 
+Some weights of the model checkpoint at microsoft/deberta-base were not used when initializing DebertaModel: ['lm_predictions.lm_head.dense.bias', 'lm_predictions.lm_head.dense.weight', 'lm_predictions.lm_head.LayerNorm.weight', 'lm_predictions.lm_head.LayerNorm.bias', 'lm_predictions.lm_head.bias']
+- This IS expected if you are initializing DebertaModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DebertaModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [4:14:21<00:00, 25.44s/it] 
+Some weights of the model checkpoint at roberta-base were not used when initializing RobertaModel: ['lm_head.bias', 'lm_head.decoder.weight', 'lm_head.dense.weight', 'lm_head.dense.bias', 'lm_head.layer_norm.bias', 'lm_head.layer_norm.weight']
+- This IS expected if you are initializing RobertaModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing RobertaModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [10:53:56<00:00, 65.39s/it]
+Some weights of the model checkpoint at xlnet-base-cased were not used when initializing XLNetModel: ['lm_loss.bias', 'lm_loss.weight']
+- This IS expected if you are initializing XLNetModel from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing XLNetModel from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 600/600 [6:11:29<00:00, 37.15s/it]
+
+C:\Users\Oshadhi Liyanage\Learnings\MSC\FYP\Existing work\AIGT\src>python train_meta_learner.py
+[nltk_data] Downloading package stopwords to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package punkt to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package wordnet to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\logger_connector\logger_connector.py:67: UserWarning: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `lightning.pytorch` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+  warning_cache.warn(
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 18
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+18        Trainable params
+0         Non-trainable params
+18        Total params
+0.000     Total estimated model params size (MB)
+Sanity Checking: 0it [00:00, ?it/s]C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `val_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, val_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, train_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Epoch 99: 100%|█████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 267.39it/s, v_num=7]`Trainer.fit` stopped: `max_epochs=100` reached.                                                                                                  
+Epoch 99: 100%|█████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 265.26it/s, v_num=7] 
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `test_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, test_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 426.95it/s] 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9711111187934875     │
+└───────────────────────────┴───────────────────────────┘
+
+C:\Users\Oshadhi Liyanage\Learnings\MSC\FYP\Existing work\AIGT\src>python train_meta_learner.py
+[nltk_data] Downloading package stopwords to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package punkt to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package wordnet to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\logger_connector\logger_connector.py:67: UserWarning: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `lightning.pytorch` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+  warning_cache.warn(
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 18
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+18        Trainable params
+0         Non-trainable params
+18        Total params
+0.000     Total estimated model params size (MB)
+Sanity Checking: 0it [00:00, ?it/s]C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `val_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, val_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, train_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Epoch 99: 100%|█████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 265.14it/s, v_num=8]`Trainer.fit` stopped: `max_epochs=100` reached.                                                                                                  
+Epoch 99: 100%|█████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 264.38it/s, v_num=8] 
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `test_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, test_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 448.01it/s] 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9700000286102295     │
+└───────────────────────────┴───────────────────────────┘
+
+C:\Users\Oshadhi Liyanage\Learnings\MSC\FYP\Existing work\AIGT\src>python train_weak_learners.py
+[nltk_data] Downloading package stopwords to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package punkt to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package wordnet to C:\Users\Oshadhi
+[nltk_data]     Liyanage\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\logger_connector\logger_connector.py:67: UserWarning: Starting from v1.9.0, `tensorboardX` has been removed as a dependency of the `lightning.pytorch` package, due to potential conflicts with other packages in the ML ecosystem. For this reason, `logger=True` will use `CSVLogger` as the default logger, unless the `tensorboard` or `tensorboardX` packages are found. Please `pip install lightning[extra]` or one of them to enable TensorBoard support by default
+  warning_cache.warn(
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 1.5 K
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+1.5 K     Trainable params
+0         Non-trainable params
+1.5 K     Total params
+0.006     Total estimated model params size (MB)
+Sanity Checking: 0it [00:00, ?it/s]C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `val_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, val_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, train_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Epoch 299: 100%|████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 232.05it/s, v_num=9]`Trainer.fit` stopped: `max_epochs=300` reached.                                                                                                  
+Epoch 299: 100%|████████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 229.13it/s, v_num=9]
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:486: PossibleUserWarning: Your `test_dataloader`'s sampler has shuffling enabled, it is strongly recommended that you turn shuffling off for val/test dataloaders.
+  rank_zero_warn(
+C:\Users\Oshadhi Liyanage\AppData\Roaming\Python\Python311\site-packages\lightning\pytorch\trainer\connectors\data_connector.py:438: PossibleUserWarning: The dataloader, test_dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 12 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+  rank_zero_warn(
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 377.67it/s] 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9566666483879089     │
+└───────────────────────────┴───────────────────────────┘
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 514
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+514       Trainable params
+0         Non-trainable params
+514       Total params
+0.002     Total estimated model params size (MB)
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 202.82it/s, v_num=10]`Trainer.fit` stopped: `max_epochs=300` reached.                                                                                                  
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 201.55it/s, v_num=10] 
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 337.63it/s]
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9355555772781372     │
+└───────────────────────────┴───────────────────────────┘
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 1.5 K
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+1.5 K     Trainable params
+0         Non-trainable params
+1.5 K     Total params
+0.006     Total estimated model params size (MB)
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 204.70it/s, v_num=11]`Trainer.fit` stopped: `max_epochs=300` reached.                                                                                                  
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 204.70it/s, v_num=11] 
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 357.50it/s]
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9511111378669739     │
+└───────────────────────────┴───────────────────────────┘
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 1.5 K
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+1.5 K     Trainable params
+0         Non-trainable params
+1.5 K     Total params
+0.006     Total estimated model params size (MB)
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 208.12it/s, v_num=12]`Trainer.fit` stopped: `max_epochs=300` reached.                                                                                                  
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 207.92it/s, v_num=12] 
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 353.46it/s]
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9566666483879089     │
+└───────────────────────────┴───────────────────────────┘
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+
+  | Name      | Type             | Params
+-----------------------------------------------
+0 | linear    | Linear           | 1.5 K
+1 | softmax   | Softmax          | 0
+2 | criterion | CrossEntropyLoss | 0
+-----------------------------------------------
+1.5 K     Trainable params
+0         Non-trainable params
+1.5 K     Total params
+0.006     Total estimated model params size (MB)
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 205.60it/s, v_num=13]`Trainer.fit` stopped: `max_epochs=300` reached.
+Epoch 299: 100%|███████████████████████████████████████████████████████████████████████████████████| 113/113 [00:00<00:00, 203.62it/s, v_num=13] 
+Testing DataLoader 0: 100%|████████████████████████████████████████████████████████████████████████████████████| 15/15 [00:00<00:00, 327.00it/s] 
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃   Runningstage.testing    ┃                           ┃
+┃          metric           ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         test_acc          │    0.9227777719497681     │
+└───────────────────────────┴───────────────────────────┘

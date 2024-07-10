@@ -3,6 +3,8 @@ import numpy as np
 from tqdm import tqdm
 import torch
 from torch import nn, optim, utils
+from torch.optim import AdamW
+
 from torch.utils.data import Dataset, DataLoader
 import lightning.pytorch as pl
 from transformers import XLNetTokenizer, XLNetModel, AutoTokenizer, AlbertModel, AutoModel, ElectraModel, RobertaModel, AlbertTokenizer
@@ -11,10 +13,6 @@ from transformers import XLNetTokenizer, XLNetModel, AutoTokenizer, AlbertModel,
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class SoftMaxLit(pl.LightningModule):
-    """
-    Reference
-    https://machinelearningmastery.com/introduction-to-softmax-classifier-in-pytorch/
-    """
     def __init__(self, n_inputs, n_outputs):
         super().__init__()
         self.linear = torch.nn.Linear(n_inputs, n_outputs)
@@ -23,31 +21,37 @@ class SoftMaxLit(pl.LightningModule):
 
     def forward(self, x):
         x = x.to(device)  # Move input to the device
-        return self.softmax(self.linear(x))
-        
+        logits = self.linear(x)
+        return logits  # Return logits for SHAP
+
+    def predict(self, x):
+        logits = self.forward(x)
+        return self.softmax(logits)  # Apply softmax for predictions
+
     def training_step(self, batch, batch_idx):
         x, y = batch
-        y_hat = self(x)
+        y_hat = self.predict(x)
         loss = self.criterion(y_hat, y)
         self.log('train_loss', loss)
         return loss
-    
+
     def configure_optimizers(self):
-        optimizer = optim.AdamW(self.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
+        optimizer = AdamW(self.parameters(), lr=0.001, betas=(0.9, 0.999), eps=1e-08, weight_decay=0.01, amsgrad=False)
         return optimizer
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
-        y_hat = self(x)
+        y_hat = self.predict(x)
         loss = self.criterion(y_hat, y)
         self.log("val_loss", loss)
-        
+
     def test_step(self, batch, batch_idx):
         x, y = batch
         y = torch.argmax(y, dim=1)
-        y_hat = torch.argmax(self(x), dim=1)
+        y_hat = torch.argmax(self.predict(x), dim=1)
         accuracy = torch.sum(y == y_hat).item() / (len(y) * 1.0)
         self.log('test_acc', accuracy)
+
 
 class Data(Dataset):
     "The data for multi-class classification"
@@ -63,6 +67,7 @@ class Data(Dataset):
         
     def _get_x_from_df(self, df, load_batch_size, tokenizer, pretrained):
         docs = df['text'].tolist()
+        additional_features = df.drop(columns=['text', 'label']).values  # Assuming additional features are in the DataFrame
         inputs = tokenizer(docs, return_tensors="pt", padding=True, truncation=True).to(self.device)
         pretrained.to(self.device)
 
@@ -70,7 +75,11 @@ class Data(Dataset):
         for i, (x, y) in zip(tqdm(range(math.ceil(len(df) / load_batch_size))), self._get_x_y_from_df_with_batch(df, load_batch_size)):
             cls = pretrained(**{k: inputs[k][x:y].to(self.device) for k in list(inputs.keys())}).last_hidden_state[:, 0, :].detach()
             cls_arr.append(cls)
-        return torch.cat(cls_arr).type(torch.float32)
+        bert_embeddings = torch.cat(cls_arr).type(torch.float32)
+        additional_features_tensor = torch.tensor(additional_features, dtype=torch.float32).to(self.device)
+        combined_features = torch.cat((bert_embeddings, additional_features_tensor), dim=1)
+        return combined_features
+
     
     def _get_y_and_len_from_df(self, df):
         dim_0 = df['text'].shape[0]
@@ -121,6 +130,7 @@ class TransformerModel():
         
     def dataset(self, df, dev, save=False, delete=False):
         dataset = Data(df, load_batch_size=30, tokenizer=self.tokenizer, pretrained=self.pretrained)
+        print(dataset)
 
         if save:
             torch.save(dataset.x, f"pretrained--dev={dev}--model={self.model_tag}.pt")

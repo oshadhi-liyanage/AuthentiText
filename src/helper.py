@@ -43,24 +43,31 @@ def load_dataset(path, test=True):
     1 if the text is human-generated
     '''
     data = []
-    columns = ['id', 'text', 'label']
     with open(path) as f:
-        lines = f.readlines()        
-        if test:
-            for line in lines:
-                line_dict = json.loads(line)
-                features = extract_features(line_dict['text'])
-                data.append([line_dict['id'], line_dict['text'], line_dict['label']] + list(features.values()))
-            feature_columns = list(features.keys())
-            columns.extend(feature_columns)
-        else:
-            columns = columns[:-1] + list(features.keys())
-            for line in lines:
-                line_dict = json.loads(line)
-                features = extract_features(line_dict['text'])
-                data.append([line_dict['id'], line_dict['text']] + list(features.values()))
+        lines = f.readlines()
+        for line in lines:
+            line_dict = json.loads(line)
+            features = extract_features(line_dict['text'])
+            if test:
+                data.append([line_dict['text'], line_dict['label']] + list(features.values()))
+            else:
+                data.append([line_dict['text']] + list(features.values()))
 
-    return pd.DataFrame(data, columns=columns).set_index('id')
+    # Define columns based on features
+    feature_columns = list(features.keys())
+    if test:
+        columns = ['text', 'label'] + feature_columns
+    else:
+        columns = ['text'] + feature_columns
+    
+    # Ensure columns match data structure
+    # print(f"Columns: {columns}")
+    # print(f"Number of columns: {len(columns)}")
+    # print(f"Sample data row: {data[0]}")
+    # print(f"Number of columns in data row: {len(data[0])}")
+
+    df = pd.DataFrame(data, columns=columns)
+    return df
 
 
 def get_text_len(row):

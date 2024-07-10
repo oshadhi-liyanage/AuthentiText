@@ -129,7 +129,7 @@ class TransformerModel():
         self.pretrained = self.MODELS[model_tag]['pretrained'].from_pretrained(self.MODELS[model_tag]['name']).to(device)
         
     def dataset(self, df, dev, save=False, delete=False):
-        dataset = Data(df, load_batch_size=30, tokenizer=self.tokenizer, pretrained=self.pretrained)
+        dataset = Data(df, load_batch_size=16, tokenizer=self.tokenizer, pretrained=self.pretrained)
         print(dataset)
 
         if save:

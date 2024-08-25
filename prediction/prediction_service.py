@@ -16,6 +16,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from PIL import Image
 import io
+import numpy as np
 
 # Get the project root directory
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -51,8 +52,23 @@ class PredictionService:
 
         # Use PIL to crop and save the image
         img = Image.open(io.BytesIO(png))
-        img = img.crop((0, 0, 1920, 1080))  # Crop to the size we set
-        img.save(image_path)
+        img_array = np.array(img)
+
+        # Find the bounding box of non-white pixels
+        non_white_pixels = np.where(img_array[:, :, :3] != [255, 255, 255])
+        top, left = np.min(non_white_pixels[0]), np.min(non_white_pixels[1])
+        bottom, right = np.max(non_white_pixels[0]), np.max(non_white_pixels[1])
+
+        # Add a small padding (e.g., 10 pixels) around the content
+        padding = 10
+        top = max(0, top - padding)
+        left = max(0, left - padding)
+        bottom = min(img.height, bottom + padding)
+        right = min(img.width, right + padding)
+
+        # Crop the image
+        cropped_img = img.crop((left, top, right, bottom))
+        cropped_img.save(image_path)
 
     def _upload_to_b2(self, file_path, object_name):
         try:

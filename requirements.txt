@@ -1,0 +1,9 @@
+Flask
+Gunicorn
+imgkit
+boto3
+selenium
+webdriver-manager
+Pillow
+SQLAlchemy
+psycopg2

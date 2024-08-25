@@ -1,5 +1,6 @@
 import mimetypes
 import os
+from urllib.parse import urlparse
 import uuid
 from pathlib import Path
 import boto3
@@ -24,6 +25,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 HTML_OUTPUT_FOLDER = PROJECT_ROOT / "explanation_results"
 IMAGE_OUTPUT_FOLDER = PROJECT_ROOT / "explanation_images"
 
+
 class PredictionService:
     def __init__(self, model, preprocessor):
         self.model = model
@@ -41,6 +43,20 @@ class PredictionService:
             aws_access_key_id=config.B2_KEY_ID,
             aws_secret_access_key=config.B2_APPLICATION_KEY
         )
+    
+    def _generate_presigned_url(self, object_name, content_type, expiration=3600):
+        """Generate a presigned URL to share an S3 object"""
+        try:
+            response = self.b2_client.generate_presigned_url('get_object',
+                                                            Params={'Bucket': config.B2_BUCKET_NAME,
+                                                                    'Key': object_name,
+                                                                    'ResponseContentType': content_type},
+                                                            ExpiresIn=expiration)
+        except ClientError as e:
+            print(f"Error generating presigned URL: {e}")
+            return None
+        
+        return response
 
     def _html_to_image(self, html_path, image_path):
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.chrome_options)
@@ -56,26 +72,27 @@ class PredictionService:
 
     def _upload_to_b2(self, file_path, object_name):
         try:
-            # content_type = mimetypes.guess_type(file_path)[0] or 'application/octet-stream'
-            # self.b2_client.upload_file(file_path, config.B2_BUCKET_NAME, object_name)
-            mimetype, _ = mimetypes.guess_type(file_path)
-            if mimetype is None:
-                raise Exception("Failed to guess mimetype")
-
-            self.b2_client.upload_file(
-                Filename=file_path,
-                Bucket=config.B2_BUCKET_NAME,
-                Key=object_name,
-                ExtraArgs={
-                    "ContentType": mimetype
-                }
-            ) 
+            content_type = mimetypes.guess_type(file_path)[0] or 'application/octet-stream'
+            
+            with open(file_path, 'rb') as file:
+                self.b2_client.put_object(
+                    Bucket=config.B2_BUCKET_NAME,
+                    Key=object_name,
+                    Body=file,
+                    ContentType=content_type
+                )
+            return self._generate_presigned_url(object_name, content_type)
         except ClientError as e:
             print(f"Error uploading to B2: {e}")
             return None
-        return f"{config.B2_ENDPOINT_URL}/{config.B2_BUCKET_NAME}/{object_name}"
-    
-   
+
+        
+    def get_viewable_url(self, url):
+        """Convert a regular S3 URL to a presigned URL"""
+        parsed_url = urlparse(url)
+        object_name = parsed_url.path.lstrip('/')  # Remove leading '/'
+        content_type = mimetypes.guess_type(object_name)[0] or 'application/octet-stream'
+        return self._generate_presigned_url(object_name, content_type)
 
     def predict(self, text):
         self.model.eval()
@@ -107,6 +124,7 @@ class PredictionService:
         # Upload image to B2
         b2_object_name = f"explanations/{image_file_name}"
         b2_image_url = self._upload_to_b2(image_file_path, b2_object_name)
+        
 
         # Store prediction in the database
         db = next(get_db())
@@ -114,6 +132,7 @@ class PredictionService:
         new_prediction = Prediction(text=text, prediction=prediction_result, confidence=confidence, explanation_url=b2_image_url)
         db.add(new_prediction)
         db.commit()
+        
 
         return {
             'text': text,

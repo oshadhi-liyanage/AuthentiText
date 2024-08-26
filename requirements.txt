@@ -14,3 +14,4 @@ pandas
 scikit-learn
 sentencepiece
 captum
+bs4

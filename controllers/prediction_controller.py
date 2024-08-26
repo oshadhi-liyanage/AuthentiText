@@ -21,18 +21,15 @@ class PredictionController:
         def get_predictions():
             db = next(get_db())
             predictions = db.query(Prediction).all()
+            print(predictions)
             return jsonify([{
                 'id': p.id,
                 'text': p.text,
                 'prediction': p.prediction,
                 'confidence': p.confidence,
-                'timestamp': p.timestamp.isoformat()
+                'timestamp': p.timestamp.isoformat(),
+                'explanation_url': p.explanation_url
             } for p in predictions])
-
-        @self.app.route('/explanation/<filename>', methods=['GET'])
-        @cross_origin()
-        def get_explanation(filename):
-            return send_file(f"explanation_results/{filename}")
 
     def run(self):
         self.app.run(debug=True)

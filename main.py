@@ -10,6 +10,7 @@ from flask_cors import CORS
 from preprocessor.preprocessor import TextPreprocessor
 from model.model import AlbertTextClassifier
 from transformers import AlbertTokenizer
+import os
 
 app = Flask(__name__)
 CORS(app) 

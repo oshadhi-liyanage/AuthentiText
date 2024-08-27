@@ -16,3 +16,4 @@ sentencepiece
 captum
 bs4
 flask_cors
+pytorch_lightning
